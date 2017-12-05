@@ -480,7 +480,7 @@ Contact Ray Gonzalez raygon@mit.edu or Kevin J. P. Woods kwoods@mit.edu
    */
   function checkCanContinue() {
     // TODO: This is HACKY and probably isn't the best idea
-    var numResponses = $('.hc-buttonset-vertical>label>input[type=radio]:checked').length;
+    var numResponses = $('.hc-buttonset-vertical>input[type=radio]:checked').length;
     var numRenderedTrials = $('.hc-buttonset-vertical').length;
     return numResponses >= numRenderedTrials;
   }
