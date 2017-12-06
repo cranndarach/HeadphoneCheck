@@ -187,6 +187,7 @@ Contact Ray Gonzalez raygon@mit.edu or Kevin J. P. Woods kwoods@mit.edu
     $('<button/>', {
       text: 'Continue',
       click: function () {
+        console.log("Continue button was clicked.");
         var canContinue = checkCanContinue();
         for (stimID = 0; stimID < headphoneCheckConfig.trialsPerPage; stimID++) {
           var trialInd = headphoneCheckData.pageNum * headphoneCheckConfig.trialsPerPage + stimID;
@@ -194,7 +195,9 @@ Contact Ray Gonzalez raygon@mit.edu or Kevin J. P. Woods kwoods@mit.edu
           scoreTrial(trialInd, headphoneCheckData.stimDataList[trialInd], response);
         }
         if (canContinue) { // Advance the page
+          console.log("can continue");
           if (headphoneCheckData.pageNum == headphoneCheckData.lastPage - 1) {// TODO: -1 for indexing; make indexing consistent
+            console.log("last page");
             // handle edge case of first page is last page
             if (headphoneCheckConfig.totalTrials == 1 && headphoneCheckData.trialScoreList[0] === undefined) {
               renderResponseWarnings();
@@ -206,15 +209,18 @@ Contact Ray Gonzalez raygon@mit.edu or Kevin J. P. Woods kwoods@mit.edu
             // add some data to the response object
             headphoneCheckData.totalCorrect = getTotalCorrect(headphoneCheckData.trialScoreList);
             headphoneCheckData.didPass = didPass;
+            console.log(headphoneCheckData);
             $(document).trigger('hcHeadphoneCheckEnd', {'didPass': didPass, 'data': headphoneCheckData, 'config': headphoneCheckConfig});
           }
           else {
+            console.log("not last page");
             teardownHTMLPage();
             headphoneCheckData.pageNum++;
             HeadphoneCheck.renderHeadphoneCheckPage();
           }
         }
         else { // need responses, don't advance page, show warnings
+          console.log("can't continue");
           renderResponseWarnings();
         }
       }
@@ -558,7 +564,7 @@ Contact Ray Gonzalez raygon@mit.edu or Kevin J. P. Woods kwoods@mit.edu
    * is returned.
    */
   function getResponseFromRadioButtonGroup(elemID) {
-    return $('#hc-radio-buttonset-'+elemID+'>label>input:checked').val();
+    return $('#hc-radio-buttonset-'+elemID+'>input:checked').val();
   }
 
   function shuffleTrials(trialArray, n, withReplacement) {
